@@ -1,0 +1,3 @@
+
+registration:
+  signOn: "//h2[text()='TEXT']"

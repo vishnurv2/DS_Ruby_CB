@@ -1,0 +1,37 @@
+{
+  "webdriver_version": "3.141.59",
+  "idleTimeout": 600,
+  "commandTimeout": 600,
+  "os": {
+    "windows": "Windows 10",
+    "mac": "macOS 10.15"
+  },
+  "windows": {
+    "osVersion": "Windows 10",
+    "browserVersion": "latest",
+    "browsers": {
+      "chrome": "89",
+      "ie": "11.285",
+      "edge": "88",
+      "firefox": "86"
+    },
+    "resolution": "1920x1080"
+  },
+  "mac": {
+    "osVersion": "macOS 10.15",
+    "browserVersion": "latest",
+    "browsers": {
+      "chrome": "89",
+      "safari": "13.1",
+      "firefox": "86"
+    },
+    "resolution": "1600x1200"
+  },
+  "datasite": {
+    "USA": {
+      "dev": {
+        "vdrURL": "https://web.dev.datasite.com"
+      }
+    }
+  }
+}
