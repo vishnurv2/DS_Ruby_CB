@@ -11,12 +11,12 @@ module EnvHelper
   end
 
   def setLambdaCredentials()
-    ENV['username'] = 'suresh.alokam'
-    ENV['accessToken'] = '0EfL0kuVhlH1KzEFrkhlPQ1IXREf3OGkWtwQA012OaPXroL62m'
+    ENV['username'] = 'username_here'
+    ENV['accessToken'] = 'accesskey_here'
   end
 
   def setLambdaURL()
-    lambdaURL = 'https://suresh.alokam:0EfL0kuVhlH1KzEFrkhlPQ1IXREf3OGkWtwQA012OaPXroL62m@hub.lambdatest.com/wd/hub'
+    lambdaURL = 'https://username:accesskey@hub.lambdatest.com/wd/hub'
     return lambdaURL
   end
 
