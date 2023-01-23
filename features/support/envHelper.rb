@@ -64,7 +64,8 @@ module EnvHelper
     start = Time.now
     block.call
     sessionid = ::Capybara.current_session.driver.browser.session_id
-    ::Capybara.current_session.driver.quit
+    # puts "calling quit in run scenario"
+    # ::Capybara.current_session.driver.quit
 
     sc = if scenario.respond_to?(:scenario_outline)
            scenario.scenario_outline

@@ -1,4 +1,4 @@
-@login @smoke
+@login @smoke @f
 Feature: Login negative functionality
 	As a user I want to test negative login
 

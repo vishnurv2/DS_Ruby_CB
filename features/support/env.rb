@@ -8,6 +8,8 @@ require_relative '../support/envHelper'
 
 include EnvHelper
 
+
+
 ENV['env'] ||= "dev"
 ENV['run'] ||= 'lambda'
 ENV['browser'] ||= 'chrome'
@@ -36,8 +38,30 @@ if ENV['run'] == 'lambda'
   EnvHelper.setLambdaCredentials()
   lambdaURL = EnvHelper.setLambdaURL()
 
+
+  Around do |scenario, block|
+  # EnvHelper.setConfig()
+  # EnvHelper.setLanguage()
+  EnvHelper.runScenarios(scenario, block)  #added directly since no skipScenarios method in this framework
+
+  # skipped = EnvHelper.skipScenarios(scenario)
+  #
+  #   if !skipped
+  #     EnvHelper.runScenarios(scenario, block)
+  #   else
+  #     EnvHelper.skipMessage(scenario)
+  #     skip_this_scenario
+  #   end
+  end
   After do |scenario|
+
     EnvHelper.setLambdaJobStatus(scenario)
+
+    # puts (" After setting test status SESSION ID ----- > " + ::Capybara.current_session.driver.browser.session_id)
+    # puts "calling quit in after do"
+    # ::Capybara.current_session.driver.quit       # added in the latest code update to get different tests for retries when setting adding the retry flag
+
+
   end
 
   AfterStep do
@@ -67,28 +91,21 @@ if ENV['run'] == 'lambda'
 
     ENV['tunnelName'] = nil if ENV['tunnelName']=='null' || ENV['tunnelName'] == 'nil'
 
+
     if ENV['browser'] == 'chrome'
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_preference('intl.accept_languages', @lang)
       capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-          platformName: os_version,
-          browserVersion: browser_version, #$platformConfig[ENV['sys']][browsers][chrome]
-          screenResolution: $platformConfig[ENV['sys']]['resolution'],
-          "selenium_version" => $platformConfig['webdriver_version'],
-          "lambda:userFiles" => [
-              "uploadToSingleFolder.pdf",
-              "file1.pdf",
-              "FailedFileToUpload.dtd",
-              "replacesearchdoc.docx",
-              "contentMgrUploadFile.pdf",
-              "ZipMaintainStructure.zip",
-              "ZipUpload.zip"
-          ],
-          commandTimeout: $platformConfig['commandTimeout'],
-          idleTimeout: $platformConfig['idleTimeout'],
-          build: $lambda_build,
-          name: $jobName
+          "platform": "Windows 10",
+          # browserVersion: "107.0", #$platformConfig[ENV['sys']][browsers][chrome]
+          # screenResolution: $platformConfig[ENV['sys']]['resolution'],
+          # "selenium_version" => $platformConfig['webdriver_version'],
+          # commandTimeout: $platformConfig['commandTimeout'],
+          # idleTimeout: $platformConfig['idleTimeout'],
+          build: "DS_Duplicate_debug",
+          # name: "Test"
       )
+
     end
     Capybara.register_driver :selenium do |app|
       Capybara::Selenium::Driver.new(app,
@@ -96,7 +113,9 @@ if ENV['run'] == 'lambda'
                                      url: lambdaURL,
                                      desired_capabilities: capabilities,
                                      options: options,
-                                     http_client: custom_client
+                                     http_client: custom_client,
+
+
       )
 
     end
@@ -104,6 +123,7 @@ if ENV['run'] == 'lambda'
     Capybara.default_max_wait_time = 10
     Capybara.current_driver = :selenium
     window = Capybara.current_session.driver.browser.manage.window
+    # puts ("Driver session created SESSION ID ----- > " + ::Capybara.current_session.driver.browser.session_id)
     window.maximize()
   end
 
@@ -130,5 +150,6 @@ elsif ENV['run'] == 'local'
 
   Capybara.default_max_wait_time = 10
   window = Capybara.current_session.driver.browser.manage.window
+  puts ("SESSION ID ----- > " + ::Capybara.current_session.driver.browser.session_id)
   window.maximize()
 end

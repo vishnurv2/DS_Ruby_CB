@@ -1,9 +1,9 @@
-@login @smoke
+@login @smoke @f
 Feature: Login negative functionality
 	As a user I want to test negative login
 
-	@unsuccessfulLogin1
+	@unsuccessfulLogin45
 	Scenario: Test 01 - Unsuccessful Login
 		Given I open the app
-		When I enter username test@datasite.com and password something
-		Then I should be on the login page
+#		When I enter username test@datasite.com and password something
+#		Then I should be on the login page

@@ -1,5 +1,5 @@
 {
-  "webdriver_version": "3.141.59",
+  "webdriver_version": "4.7",
   "idleTimeout": 600,
   "commandTimeout": 600,
   "os": {
@@ -10,7 +10,7 @@
     "osVersion": "Windows 10",
     "browserVersion": "latest",
     "browsers": {
-      "chrome": "89",
+      "chrome": "107.0",
       "ie": "11.285",
       "edge": "88",
       "firefox": "86"
